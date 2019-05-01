@@ -25,25 +25,48 @@ def validaTags (candidatas, reconhecidas):
     #Processa cada tag na lista de candidatas
     for tag in candidatas:
         validaTag (tag, reconhecidas)
+    #Limpa a lista de tags candidatas, as tags que nao foram reconhecidas sao descartadas
+    candidatas.clear()
 
 #Faz a validacao de uma unica tag (para tags digitadas pelo usuario)
 def validaTag (entrada, reconhecidas):
     pilha = []
+    operadores = ['+', '.', '*']
     #Separa a tag em nome e a tag em si
-    split = entrada.split()
+    split = entrada.split(' ', 1) #Faz o split apenas ate o primeiro espaco (para reconhecer espaco)
     nomeTag = split[0]
-    tag = split[1]
+    tag = split[1].rstrip() #rstrip remove o \n
     #Percorre toda a tag verificando cada caractere
-    for char in tag: 
-        #Verifica se o caracter atual e letra/numero ou operador
-        if char.isalnum():
-            pilha.append(char)
-            print (char)
-        else:
+    for char in tag:
+        #Verifica se o caractere atual e um operador
+        if char in operadores:
+            #Operador unario, desempilha um elemento e adiciona o operador
             if char == '*':
-                print ('Operador unario ', char) #Teste
-            else:
-                print ('Operador binario ', char) #Teste
+                if len(pilha) < 1:
+                    print ('[WARN] Tag',nomeTag,'nao reconhecida: operador unario precisa de um operando!')
+                    return False
+                else:
+                    novaExpressao = pilha.pop() + char
+                    pilha.append(novaExpressao)
+            #Operador binario, desempilha dois elementos e adiciona o operador entre eles
+            elif char == '+' or char == '.':
+                if len(pilha) < 2:
+                    print ('[WARN] Tag',nomeTag,'nao reconhecida: operador binario precisa de dois operandos!')
+                    return False
+                else:
+                    novaExpressao = pilha.pop() + char + pilha.pop()
+                    pilha.append(novaExpressao)
+        #Caso o caractere nao seja um operador, ele e adicionado na pilha
+        else:
+            pilha.append(char)
+    #Ao acabar de percorrer a tag, verifica se a pilha possui apenas um elemento, se sim a tag e valida
+    if len(pilha) == 1:
+        print ('[INFO] Tag',nomeTag,'reconhecida')
+        reconhecidas.append(entrada)
+        return True
+    else:
+        print ('[WARN] Tag',nomeTag,'nao reconhecida: expressao regular malformada!')
+        return False
 
 if __name__ == "__main__":
     tags_reconhecidas = [] #Tags que ja foram validadas
@@ -76,8 +99,10 @@ if __name__ == "__main__":
             elif comando[0] == ':p':
                 print ('[INFO] Comando para realizar a divisao de tags da entrada ainda nao implementado!')
             else:
-                print ('[WARN] Comando invalido!')
-        #Usuario digitou uma tag (do tipo VAR: ab+x) diretamente e ela precisa ser validada
+                print ('[ERROR] Comando invalido!')
+        #Usuario digitou uma tag (do tipo VAR: ab+c+x+) diretamente e ela precisa ser validada
         else:
-            print (entrada)
-            validaTag(entrada, tags_reconhecidas)
+            if len(entrada.split(' ', 1)) == 2:
+                validaTag(entrada, tags_reconhecidas)
+            else:
+                print ('[ERROR] Formato de tag invalido! Exemplo de formato: "TAG: ab+c+x+"')
