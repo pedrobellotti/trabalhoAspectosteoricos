@@ -24,11 +24,26 @@ def salvaArquivo (nomeArquivo, tags):
 def validaTags (candidatas, reconhecidas):
     #Processa cada tag na lista de candidatas
     for tag in candidatas:
-        print (tag)
+        validaTag (tag, reconhecidas)
 
 #Faz a validacao de uma unica tag (para tags digitadas pelo usuario)
 def validaTag (entrada, reconhecidas):
-    print ('validar')
+    pilha = []
+    #Separa a tag em nome e a tag em si
+    split = entrada.split()
+    nomeTag = split[0]
+    tag = split[1]
+    #Percorre toda a tag verificando cada caractere
+    for char in tag: 
+        #Verifica se o caracter atual e letra/numero ou operador
+        if char.isalnum():
+            pilha.append(char)
+            print (char)
+        else:
+            if char == '*':
+                print ('Operador unario ', char) #Teste
+            else:
+                print ('Operador binario ', char) #Teste
 
 if __name__ == "__main__":
     tags_reconhecidas = [] #Tags que ja foram validadas
