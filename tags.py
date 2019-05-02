@@ -1,12 +1,13 @@
 
 print ('Trabalho de Aspectos Teoricos da Computacao')
 
-#Le um arquivo de tags e carrega todas na memoria (nao faz a validacao)
+#Le um arquivo de tags, valida e carrega as validas na memoria
 def importaArquivo(nomeArquivo, tags):
     try:
         with open(nomeArquivo) as arquivo:
             for linha in arquivo:
-                tags.append(linha)
+                if validaTag(linha):
+                    tags.append(linha)
         print ('[INFO] As definicoes de tags foram carregadas')
     except(IOError):
        print ("[ERROR] Erro ao abrir o arquivo:", nomeArquivo)
@@ -20,22 +21,14 @@ def salvaArquivo (nomeArquivo, tags):
     arquivo.close()
     print ('[INFO] As definicoes de tags foram salvas')
 
-#Faz a validacao de varias tags (para tags lidas do arquivo)
-def validaTags (candidatas, reconhecidas):
-    #Processa cada tag na lista de candidatas
-    for tag in candidatas:
-        validaTag (tag, reconhecidas)
-    #Limpa a lista de tags candidatas, as tags que nao foram reconhecidas sao descartadas
-    candidatas.clear()
-
-#Faz a validacao de uma unica tag (para tags digitadas pelo usuario)
-def validaTag (entrada, reconhecidas):
+#Faz a validacao de uma tag
+def validaTag (entrada):
     pilha = []
     operadores = ['+', '.', '*']
     #Separa a tag em nome e a tag em si
     split = entrada.split(' ', 1) #Faz o split apenas ate o primeiro espaco (para reconhecer espaco)
     nomeTag = split[0]
-    tag = split[1].rstrip() #rstrip remove o \n
+    tag = split[1].rstrip('\n') #rstrip remove o \n
     #Percorre toda a tag verificando cada caractere
     for char in tag:
         #Verifica se o caractere atual e um operador
@@ -62,15 +55,13 @@ def validaTag (entrada, reconhecidas):
     #Ao acabar de percorrer a tag, verifica se a pilha possui apenas um elemento, se sim a tag e valida
     if len(pilha) == 1:
         print ('[INFO] Tag',nomeTag,'reconhecida')
-        reconhecidas.append(entrada)
         return True
     else:
         print ('[WARN] Tag',nomeTag,'nao reconhecida: expressao regular malformada!')
         return False
 
 if __name__ == "__main__":
-    tags_reconhecidas = [] #Tags que ja foram validadas
-    tags_candidatas = [] #Tags ainda nao validadas (apenas lidas do arquivo)
+    conjunto_tags = [] #Conjunto de tags validas (tags invalidas nao sao armazenadas)
 
     #Le entradas do usuario ate que o comando :q seja digitado
     while True:
@@ -85,13 +76,12 @@ if __name__ == "__main__":
                 if len(comando) != 2:
                     print ('[WARN] Este comando precisa de apenas um parametro!')
                 else:
-                    salvaArquivo(comando[1], tags_reconhecidas)
+                    salvaArquivo(comando[1], conjunto_tags)
             elif comando[0] == ':l':
                 if len(comando) != 2:
                     print ('[WARN] Este comando precisa de apenas um parametro!')
                 else:
-                    importaArquivo(comando[1], tags_candidatas)
-                    validaTags(tags_candidatas, tags_reconhecidas)
+                    importaArquivo(comando[1], conjunto_tags)
             elif comando[0] == ':f':
                 print ('[INFO] Comando para realizar a divisao de tags do arquivo ainda nao implementado!')
             elif comando[0] == ':o':
@@ -103,6 +93,7 @@ if __name__ == "__main__":
         #Usuario digitou uma tag (do tipo VAR: ab+c+x+) diretamente e ela precisa ser validada
         else:
             if len(entrada.split(' ', 1)) == 2:
-                validaTag(entrada, tags_reconhecidas)
+                if validaTag(entrada):
+                    conjunto_tags.append(entrada)
             else:
                 print ('[ERROR] Formato de tag invalido! Exemplo de formato: "TAG: ab+c+x+"')
