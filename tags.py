@@ -6,8 +6,9 @@ def importaArquivo(nomeArquivo, tags):
     try:
         with open(nomeArquivo) as arquivo:
             for linha in arquivo:
-                if validaTag(linha):
-                    tags.append(linha)
+                if verificaFormato(linha, tags):
+                    if validaTag(linha):
+                        tags.append(linha)
         print ('[INFO] As definicoes de tags foram carregadas')
     except(IOError):
        print ("[WARN] Erro ao abrir o arquivo:", nomeArquivo)
@@ -62,6 +63,18 @@ def validaTag (entrada):
         print ('[ERROR] Tag',nomeTag,'nao reconhecida: expressao regular malformada!')
         return False
 
+def verificaFormato (entrada, tags):
+    nomeTag = entrada.split()[0]
+    if len(entrada.split(' ', 1)) == 2:
+        for tag in tags:
+            if nomeTag in tag:
+                print ('[ERROR] Tag',nomeTag,'ja existe uma tag com esse nome!')
+                return False
+    else:
+        print ('[ERROR] Tag',nomeTag,'formato invalido! Exemplo de formato: "TAG: ab+c+x+"')
+        return False
+    return True
+
 if __name__ == "__main__":
     conjunto_tags = [] #Conjunto de tags validas (tags invalidas nao sao armazenadas)
 
@@ -94,8 +107,6 @@ if __name__ == "__main__":
                 print ('[ERROR] Comando invalido!')
         #Usuario digitou uma tag (do tipo VAR: ab+c+x+) diretamente e ela precisa ser validada
         else:
-            if len(entrada.split(' ', 1)) == 2:
+            if verificaFormato(entrada, conjunto_tags):
                 if validaTag(entrada):
-                    conjunto_tags.append(entrada)
-            else:
-                print ('[ERROR] Formato de tag invalido! Exemplo de formato: "TAG: ab+c+x+"')
+                    conjunto_tags.append(entrada+'\n')
