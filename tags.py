@@ -28,12 +28,23 @@ def salvaArquivo (nomeArquivo, tags):
 def validaTag (entrada):
     pilha = []
     operadores = ['+', '.', '*']
+    escape = ['n','\\','*','.','+','l']
+    charanterior = ''
     #Separa a tag em nome e a tag em si
     split = entrada.split(' ', 1) #Faz o split apenas ate o primeiro espaco (para reconhecer espaco)
     nomeTag = split[0]
     tag = split[1].rstrip('\n') #rstrip remove o \n
     #Percorre toda a tag verificando cada caractere
     for char in tag:
+        #Verifica se o caractere atual foi precedido por '\' e é um caractere de escape
+        if charanterior == '\\':
+            #Se ele for de escape, adiciona na pilha e passa para a proxima iteracao, se nao, exibe erro
+            if char in escape:
+                pilha.append(char)
+                break
+            else:
+                print ('[ERROR] Tag',nomeTag,'nao reconhecida: caractere',char,'não é um caractere de escape!')
+                return False
         #Verifica se o caractere atual e um operador
         if char in operadores:
             #Operador unario, desempilha um elemento e adiciona o operador
@@ -54,7 +65,9 @@ def validaTag (entrada):
                     pilha.append(novaExpressao)
         #Caso o caractere nao seja um operador, ele e adicionado na pilha
         else:
-            pilha.append(char)
+            if char != '\\': #Nao adiciona \ na pilha para nao gerar problemas no reconhecimento
+                pilha.append(char)
+        charanterior = char
     #Ao acabar de percorrer a tag, verifica se a pilha possui apenas um elemento, se sim a tag e valida
     if len(pilha) == 1:
         print ('[INFO] Tag',nomeTag,'reconhecida')
@@ -65,10 +78,14 @@ def validaTag (entrada):
 
 def verificaFormato (entrada, tags):
     nomeTag = entrada.split()[0]
+    expressaoTag = entrada.split()[1]
     if len(entrada.split(' ', 1)) == 2:
         for tag in tags:
             if nomeTag in tag:
-                print ('[ERROR] Tag',nomeTag,'ja existe uma tag com esse nome!')
+                print ('[ERROR] Tag',nomeTag,'nao reconhecida: ja existe uma tag com esse nome!')
+                return False
+            if expressaoTag in tag:
+                print ('[ERROR] Tag',nomeTag,'nao reconhecida: ja existe uma tag com essa expressao!')
                 return False
     else:
         print ('[ERROR] Tag',nomeTag,'formato invalido! Exemplo de formato: "TAG: ab+c+x+"')
