@@ -10,15 +10,17 @@ def importaArquivo(nomeArquivo, tags):
                     tags.append(linha)
         print ('[INFO] As definicoes de tags foram carregadas')
     except(IOError):
-       print ("[ERROR] Erro ao abrir o arquivo:", nomeArquivo)
-       quit()
+       print ("[WARN] Erro ao abrir o arquivo:", nomeArquivo)
 
 #Salva em um arquivo todas as tags que foram validadas
 def salvaArquivo (nomeArquivo, tags):
-    arquivo = open(nomeArquivo, "w") #w apaga e escreve por cima do arquivo caso ele ja exista
-    for tag in tags:
-        arquivo.write(tag)
-    arquivo.close()
+    try:
+        arquivo = open(nomeArquivo, "w") #w apaga e escreve por cima do arquivo caso ele ja exista
+        for tag in tags:
+            arquivo.write(tag)
+        arquivo.close()
+    except(IOError):
+        print ("[WARN] Erro ao salvar o arquivo:", nomeArquivo)
     print ('[INFO] As definicoes de tags foram salvas')
 
 #Faz a validacao de uma tag
@@ -36,7 +38,7 @@ def validaTag (entrada):
             #Operador unario, desempilha um elemento e adiciona o operador
             if char == '*':
                 if len(pilha) < 1:
-                    print ('[WARN] Tag',nomeTag,'nao reconhecida: operador unario precisa de um operando!')
+                    print ('[ERROR] Tag',nomeTag,'nao reconhecida: operador unario precisa de um operando!')
                     return False
                 else:
                     novaExpressao = pilha.pop() + char
@@ -44,7 +46,7 @@ def validaTag (entrada):
             #Operador binario, desempilha dois elementos e adiciona o operador entre eles
             elif char == '+' or char == '.':
                 if len(pilha) < 2:
-                    print ('[WARN] Tag',nomeTag,'nao reconhecida: operador binario precisa de dois operandos!')
+                    print ('[ERROR] Tag',nomeTag,'nao reconhecida: operador binario precisa de dois operandos!')
                     return False
                 else:
                     novaExpressao = pilha.pop() + char + pilha.pop()
@@ -57,7 +59,7 @@ def validaTag (entrada):
         print ('[INFO] Tag',nomeTag,'reconhecida')
         return True
     else:
-        print ('[WARN] Tag',nomeTag,'nao reconhecida: expressao regular malformada!')
+        print ('[ERROR] Tag',nomeTag,'nao reconhecida: expressao regular malformada!')
         return False
 
 if __name__ == "__main__":
