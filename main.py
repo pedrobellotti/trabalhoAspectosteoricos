@@ -1,5 +1,10 @@
-
-print ('Trabalho de Aspectos Teoricos da Computacao')
+#########################################################
+#   Trabalho DCC146 - Aspectos Teoricos da Computacao   #
+# Grupo:                                                #
+#                                                       #
+#                                                       #
+#                                                       #
+#########################################################
 
 #Le um arquivo de tags, valida e carrega as validas na memoria
 def importaArquivo(nomeArquivo, tags):
@@ -20,9 +25,9 @@ def salvaArquivo (nomeArquivo, tags):
         for tag in tags:
             arquivo.write(tag)
         arquivo.close()
+        print ('[INFO] As definicoes de tags foram salvas')
     except(IOError):
         print ("[WARN] Erro ao salvar o arquivo:", nomeArquivo)
-    print ('[INFO] As definicoes de tags foram salvas')
 
 #Faz a validacao de uma tag
 def validaTag (entrada):
