@@ -1,7 +1,11 @@
 #!/bin/bash
 if command -v python3 &>/dev/null; then
-    python3 main.py
-    py3clean .
+    if [ -f main.py -a -f gerenciaArquivo.py -a -f validacaoTags.py ]; then
+        python3 main.py
+        py3clean .
+    else
+        echo [ERROR] Algum arquivo esta faltando! Arquivos necessarios: main.py gerenciaArquivo.py validacaoTags.py
+    fi
 else
     echo [ERROR] Python 3 nao instalado no computador!
 fi

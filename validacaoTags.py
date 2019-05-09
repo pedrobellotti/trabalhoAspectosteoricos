@@ -1,9 +1,9 @@
 #########################################################
 #   Trabalho DCC146 - Aspectos Teoricos da Computacao   #
 # Grupo:                                                #
-#                                                       #
-#                                                       #
-#                                                       #
+# Marcos Aquino                                         #
+# Matheus Queiroz                                       #
+# Pedro Bellotti                                        #
 #########################################################
 
 #Faz a validacao de uma tag
@@ -59,17 +59,19 @@ def validaTag (entrada):
         return False
 
 def verificaFormato (entrada, tags):
-    nomeTag = entrada.split()[0]
-    expressaoTag = entrada.split()[1]
+    nomeEntrada = entrada.split()[0]
+    expressaoEntrada = entrada.split()[1]
     if len(entrada.split(' ', 1)) == 2:
         for tag in tags:
-            if nomeTag in tag:
-                print ('[ERROR] Tag',nomeTag,'nao reconhecida: ja existe uma tag com esse nome!')
+            nomeTag = tag.split()[0]
+            expressaoTag = tag.split()[1]
+            if nomeEntrada == nomeTag:
+                print ('[ERROR] Tag',nomeEntrada,'nao reconhecida: ja existe uma tag com esse nome!')
                 return False
-            if expressaoTag in tag:
-                print ('[ERROR] Tag',nomeTag,'nao reconhecida: ja existe uma tag com essa expressao!')
+            if expressaoEntrada == expressaoTag:
+                print ('[ERROR] Tag',nomeEntrada,'nao reconhecida: ja existe uma tag com essa expressao!')
                 return False
     else:
-        print ('[ERROR] Tag',nomeTag,'formato invalido! Exemplo de formato: "TAG: ab+c+x+"')
+        print ('[ERROR] Tag',nomeEntrada,'formato invalido! Exemplo de formato: "TAG: ab+c+x+"')
         return False
     return True

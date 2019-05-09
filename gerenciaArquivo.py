@@ -1,9 +1,9 @@
 #########################################################
 #   Trabalho DCC146 - Aspectos Teoricos da Computacao   #
 # Grupo:                                                #
-#                                                       #
-#                                                       #
-#                                                       #
+# Marcos Aquino                                         #
+# Matheus Queiroz                                       #
+# Pedro Bellotti                                        #
 #########################################################
 
 import validacaoTags as valida
