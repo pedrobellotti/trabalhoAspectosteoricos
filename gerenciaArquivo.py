@@ -2,11 +2,12 @@
 #   Trabalho DCC146 - Aspectos Teoricos da Computacao   #
 # Grupo:                                                #
 # Marcos Aquino                                         #
-# Matheus Queiroz                                       #
-# Pedro Bellotti                                        #
+# Matheus Queiroz - 201776030                           #
+# Pedro Bellotti - 201676043                            #
 #########################################################
 
 import validacaoTags as valida
+import os
 
 #Le um arquivo de tags, valida e carrega as validas na memoria
 def importaArquivo(nomeArquivo, tags):
@@ -22,6 +23,8 @@ def importaArquivo(nomeArquivo, tags):
 
 #Salva em um arquivo todas as tags que foram validadas
 def salvaArquivo (nomeArquivo, tags):
+    if os.path.isfile(nomeArquivo):
+        print('[WARN] O arquivo', nomeArquivo, 'ja existe e sera sobrescrito!')
     try:
         arquivo = open(nomeArquivo, "w") #w apaga e escreve por cima do arquivo caso ele ja exista
         for tag in tags:

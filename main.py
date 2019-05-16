@@ -2,8 +2,8 @@
 #   Trabalho DCC146 - Aspectos Teoricos da Computacao   #
 # Grupo:                                                #
 # Marcos Aquino                                         #
-# Matheus Queiroz                                       #
-# Pedro Bellotti                                        #
+# Matheus Queiroz - 201776030                           #
+# Pedro Bellotti - 201676043                            #
 #########################################################
 
 import validacaoTags as valida
@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
     #Le entradas do usuario ate que o comando :q seja digitado
     while True:
-        entrada = input('Digite um comando ou tag: ')
+        entrada = input()
         #Reconhece os comandos iniciados com ':'
         if entrada[0] == ':':
             comando = entrada.split()

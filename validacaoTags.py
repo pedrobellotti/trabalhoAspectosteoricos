@@ -2,8 +2,8 @@
 #   Trabalho DCC146 - Aspectos Teoricos da Computacao   #
 # Grupo:                                                #
 # Marcos Aquino                                         #
-# Matheus Queiroz                                       #
-# Pedro Bellotti                                        #
+# Matheus Queiroz - 201776030                           #
+# Pedro Bellotti - 201676043                            #
 #########################################################
 
 #Faz a validacao de uma tag
@@ -59,8 +59,12 @@ def validaTag (entrada):
         return False
 
 def verificaFormato (entrada, tags):
-    nomeEntrada = entrada.split()[0]
-    expressaoEntrada = entrada.split()[1]
+    try:
+        nomeEntrada = entrada.split()[0]
+        expressaoEntrada = entrada.split()[1]
+    except:
+        print ('[ERROR] Tag',nomeEntrada,'nao reconhecida: expressao regular vazia!')
+        return False
     if len(entrada.split(' ', 1)) == 2:
         for tag in tags:
             nomeTag = tag.split()[0]
