@@ -72,9 +72,6 @@ def verificaFormato (entrada, tags):
             if nomeEntrada == nomeTag:
                 print ('[ERROR] Tag',nomeEntrada,'nao reconhecida: ja existe uma tag com esse nome!')
                 return False
-            if expressaoEntrada == expressaoTag:
-                print ('[ERROR] Tag',nomeEntrada,'nao reconhecida: ja existe uma tag com essa expressao!')
-                return False
     else:
         print ('[ERROR] Tag',nomeEntrada,'formato invalido! Exemplo de formato: "TAG: ab+c+x+"')
         return False

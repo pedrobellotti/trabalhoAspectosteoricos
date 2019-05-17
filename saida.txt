@@ -4,4 +4,4 @@ VAR: ab+c+x+
 TESTE: ij+k*.
 AB: a*b*.
 PAR: ab.ba.+aa.+bb.+*
-MUDA: ab+*
+MAIS: ab+

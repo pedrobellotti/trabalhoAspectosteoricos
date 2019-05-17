@@ -23,12 +23,12 @@ if __name__ == "__main__":
                 quit()
             elif comando[0] == ':s':
                 if len(comando) != 2:
-                    print ('[WARN] Este comando precisa de apenas um parametro!')
+                    print ('[WARN] Este comando precisa de 1 parametro!')
                 else:
                     arquivo.salvaArquivo(comando[1], conjunto_tags)
             elif comando[0] == ':l':
                 if len(comando) != 2:
-                    print ('[WARN] Este comando precisa de apenas um parametro!')
+                    print ('[WARN] Este comando precisa de 1 parametro!')
                 else:
                     arquivo.importaArquivo(comando[1], conjunto_tags)
             elif comando[0] == ':f':
