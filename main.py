@@ -8,9 +8,11 @@
 
 import validacaoTags as valida
 import gerenciaArquivo as arquivo
+import fabricaAutomato as fabrica
 
 if __name__ == "__main__":
     conjunto_tags = [] #Conjunto de tags validas (tags invalidas nao sao armazenadas)
+    automatos = [] #Pilha de automatos criados a partir das tags
 
     #Le entradas do usuario ate que o comando :q seja digitado
     while True:
@@ -37,10 +39,15 @@ if __name__ == "__main__":
                 print ('[INFO] Comando para especificar o caminho do arquivo de saida ainda nao implementado!')
             elif comando[0] == ':p':
                 print ('[INFO] Comando para realizar a divisao de tags da entrada ainda nao implementado!')
+            ### Comando para imprimir todos os automatos da lista (apenas para testes, remover na versao final) ###
+            elif comando[0] == ':i':
+                for automato in automatos:
+                    automato.imprimeAutomato()
             else:
                 print ('[ERROR] Comando invalido!')
         #Usuario digitou uma tag (do tipo VAR: ab+c+x+) diretamente e ela precisa ser validada
         else:
             if valida.verificaFormato(entrada, conjunto_tags):
                 if valida.validaTag(entrada):
-                    conjunto_tags.append(entrada+'\n')
+                    conjunto_tags.append(entrada+'\n') #Salva a tag lida
+                    fabrica.criaAutomato(entrada, automatos) #Cria um automato com a tag
