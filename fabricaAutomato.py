@@ -127,7 +127,8 @@ def uniaoA(a1):
     a1.atualizaIds()
     return a1
 
-def criaAutomato(expressao, pilha_automatos):
+def criaAutomato(expressao):
+    pilha_automatos = []
     #Separa a tag em nome e a tag em si
     split = expressao.split(' ', 1) #Faz o split apenas ate o primeiro espaco (para reconhecer espaco)
     nomeTag = split[0]
@@ -150,3 +151,9 @@ def criaAutomato(expressao, pilha_automatos):
         else:
             aux = automatoSimples(char, nomeTag)
             pilha_automatos.append(aux)
+    if(len(pilha_automatos) == 1):
+        print ('[INFO] Tag',nomeTag,'automato criado')
+        return pilha_automatos.pop()
+    else:
+        print ('[ERROR] Tag',nomeTag,'erro ao criar automato!')
+        return 0

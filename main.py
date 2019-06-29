@@ -36,7 +36,9 @@ if __name__ == "__main__":
                     #Criando automatos para todas as tags lidas
                     if (importa):
                         for tag in conjunto_tags:
-                            fabrica.criaAutomato(tag, automatos)
+                            auto = fabrica.criaAutomato(tag)
+                            if (auto != 0):
+                                automatos.append(auto)
             elif comando[0] == ':f':
                 print ('[INFO] Comando para realizar a divisao de tags do arquivo ainda nao implementado!')
             elif comando[0] == ':o':
@@ -55,4 +57,6 @@ if __name__ == "__main__":
             if valida.verificaFormato(entrada, conjunto_tags):
                 if valida.validaTag(entrada):
                     conjunto_tags.append(entrada+'\n') #Salva a tag lida
-                    fabrica.criaAutomato(entrada, automatos) #Cria um automato com a tag
+                    auto = fabrica.criaAutomato(entrada) #Cria um automato com a tag
+                    if (auto != 0): #Salva o automato na lista caso ele tenha sido criado corretamente
+                        automatos.append(auto) 
