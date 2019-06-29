@@ -35,7 +35,6 @@ from automato import Automato
 
 #Cria um automato simples (caso 1)
 def automatoSimples (simbolo, tag):
-    print ('Criando automato simples letra',simbolo)
     automato = Automato(tag) #Cria um novo automato
     eInicial = Estado(True, False) #Cria um estado inicial
     eFinal = Estado(False, True) #Cria um estado final
@@ -51,7 +50,6 @@ def automatoSimples (simbolo, tag):
 
 #Faz a uniao descrita no caso 2 (+)
 def uniaoOu(a1, a2, tag):
-    print ('Fazendo uniao + a1 a2 de', a1.getTag(), a2.getTag())
     novoAutomato = Automato(tag) #Cria um novo automato
     #Adicionando todos os estados dos automatos antigos no novo
     estados1 = a1.getEstados()
@@ -92,7 +90,6 @@ def uniaoOu(a1, a2, tag):
 
 #Faz a uniao descrita no caso 3 (.)
 def uniaoE(a1, a2, tag):
-    print ('Fazendo uniao . a1 a2 de', a1.getTag(), a2.getTag())
     novoAutomato = Automato(tag) #Cria um novo automato
     #Adicionando todos os estados dos automatos antigos no novo
     estados1 = a1.getEstados()
@@ -116,7 +113,6 @@ def uniaoE(a1, a2, tag):
 
 #Faz a uniao descrita no caso 4 (*)
 def uniaoA(a1):
-    print ('Fazendo uniao * a1 de', a1.getTag())
     eIniciais = a1.getEstadosIniciais()
     eFinais = a1.getEstadosFinais()
     for final in eFinais:
@@ -127,7 +123,6 @@ def uniaoA(a1):
     return a1
 
 def criaAutomato(expressao, pilha_automatos):
-    print ('Criando automato')
     #Separa a tag em nome e a tag em si
     split = expressao.split(' ', 1) #Faz o split apenas ate o primeiro espaco (para reconhecer espaco)
     nomeTag = split[0]
@@ -135,10 +130,14 @@ def criaAutomato(expressao, pilha_automatos):
     #Percorre toda a tag verificando cada caractere
     for char in tag:
         if(char == '.'):
-            aux = uniaoE(pilha_automatos.pop(), pilha_automatos.pop(), nomeTag)
+            a2 = pilha_automatos.pop()
+            a1 = pilha_automatos.pop()
+            aux = uniaoE(a1, a2, nomeTag)
             pilha_automatos.append(aux)
         elif (char == '+'):
-            aux = uniaoOu(pilha_automatos.pop(), pilha_automatos.pop(), nomeTag)
+            a2 = pilha_automatos.pop()
+            a1 = pilha_automatos.pop()
+            aux = uniaoOu(a1, a2, nomeTag)
             pilha_automatos.append(aux)
         elif (char == '*'):
             aux = uniaoA(pilha_automatos.pop())

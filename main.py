@@ -43,6 +43,7 @@ if __name__ == "__main__":
             elif comando[0] == ':i':
                 for automato in automatos:
                     automato.imprimeAutomato()
+                    print ('-------------------')
             else:
                 print ('[ERROR] Comando invalido!')
         #Usuario digitou uma tag (do tipo VAR: ab+c+x+) diretamente e ela precisa ser validada
