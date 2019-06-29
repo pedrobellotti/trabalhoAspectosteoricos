@@ -47,5 +47,12 @@ class Automato:
     def imprimeAutomato(self):
         print('\n')
         print ('TAG:', self.tag)
+        print ('Estados Iniciais:')
+        for estado in self.eIniciais:
+            print(estado.getId())
+        print ('Estados Finais:')
+        for estado in self.eFinais:
+            print(estado.getId())
+        print ('Todos os estados:')
         for estado in self.estados:
             estado.imprimeEstado()

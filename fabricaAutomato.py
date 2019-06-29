@@ -110,6 +110,9 @@ def uniaoE(a1, a2, tag):
             estadoInicial.setInicial(False)
             t = Transicao (estadoFinal, estadoInicial, '')
             estadoFinal.addTransicao(t)
+    #Adicionando todos os estados finais de a2 na lista de estados finais do novo automato
+    for estadoFinal in a2.getEstadosFinais():
+        novoAutomato.addEstadoFinal(estadoFinal)
     novoAutomato.atualizaIds()
     return novoAutomato
 
