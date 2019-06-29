@@ -18,8 +18,10 @@ def importaArquivo(nomeArquivo, tags):
                     if valida.validaTag(linha):
                         tags.append(linha)
         print ('[INFO] As definicoes de tags foram carregadas')
+        return True
     except(IOError):
        print ("[WARN] Erro ao abrir o arquivo:", nomeArquivo)
+       return False
 
 #Salva em um arquivo todas as tags que foram validadas
 def salvaArquivo (nomeArquivo, tags):

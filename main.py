@@ -32,7 +32,11 @@ if __name__ == "__main__":
                 if len(comando) != 2:
                     print ('[WARN] Este comando precisa de 1 parametro!')
                 else:
-                    arquivo.importaArquivo(comando[1], conjunto_tags)
+                    importa = arquivo.importaArquivo(comando[1], conjunto_tags)
+                    #Criando automatos para todas as tags lidas
+                    if (importa):
+                        for tag in conjunto_tags:
+                            fabrica.criaAutomato(tag, automatos)
             elif comando[0] == ':f':
                 print ('[INFO] Comando para realizar a divisao de tags do arquivo ainda nao implementado!')
             elif comando[0] == ':o':
