@@ -61,6 +61,8 @@ def uniaoOu(a1, a2, tag):
     #Criando novos estados
     novoInicial = Estado(True, False)
     novoFinal = Estado(False, True)
+    novoAutomato.addEstado(novoInicial)
+    novoAutomato.addEstado(novoFinal)
     novoAutomato.addEstadoInicial(novoInicial)
     novoAutomato.addEstadoFinal(novoFinal)
     #Criando novas transicoes para os estados iniciais
