@@ -9,14 +9,17 @@
 import validacaoTags as valida
 import gerenciaArquivo as arquivo
 import fabricaAutomato as fabrica
+import divisaoTags as divide
 
 if __name__ == "__main__":
     conjunto_tags = [] #Conjunto de tags validas (tags invalidas nao sao armazenadas)
-    automatos = [] #Pilha de automatos criados a partir das tags
+    conjunto_automatos = [] #Conjunto de automatos criados a partir das tags
 
     #Le entradas do usuario ate que o comando :q seja digitado
     while True:
         entrada = input()
+        while not entrada: #Evita erro de linha em branco
+            entrada = input()
         #Reconhece os comandos iniciados com ':'
         if entrada[0] == ':':
             comando = entrada.split()
@@ -38,16 +41,19 @@ if __name__ == "__main__":
                         for tag in conjunto_tags:
                             auto = fabrica.criaAutomato(tag)
                             if (auto != 0):
-                                automatos.append(auto)
+                                conjunto_automatos.append(auto)
             elif comando[0] == ':f':
                 print ('[INFO] Comando para realizar a divisao de tags do arquivo ainda nao implementado!')
             elif comando[0] == ':o':
                 print ('[INFO] Comando para especificar o caminho do arquivo de saida ainda nao implementado!')
             elif comando[0] == ':p':
-                print ('[INFO] Comando para realizar a divisao de tags da entrada ainda nao implementado!')
+                if len(comando) < 2:
+                    print ('[WARN] Este comando precisa de pelo menos 1 parametro!')
+                else:
+                    divide.divideTag(comando[1:], conjunto_automatos)
             ### Comando para imprimir todos os automatos da lista (apenas para testes, remover na versao final) ###
             elif comando[0] == ':i':
-                for automato in automatos:
+                for automato in conjunto_automatos:
                     automato.imprimeAutomato()
                     print ('-------------------')
             else:
@@ -59,4 +65,4 @@ if __name__ == "__main__":
                     conjunto_tags.append(entrada+'\n') #Salva a tag lida
                     auto = fabrica.criaAutomato(entrada) #Cria um automato com a tag
                     if (auto != 0): #Salva o automato na lista caso ele tenha sido criado corretamente
-                        automatos.append(auto) 
+                        conjunto_automatos.append(auto)
