@@ -7,3 +7,4 @@ ERRADA2: 01+2+3+4+5+6+7+8+9*
 ERRADA3: ab+c
 AB: a*b*.
 PAR: ab.ba.+aa.+bb.+*
+AB2: a*b*
