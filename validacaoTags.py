@@ -53,7 +53,7 @@ def validaTag (entrada):
     #Ao acabar de percorrer a tag, verifica se a pilha possui apenas um elemento, se sim a tag e valida
     if len(pilha) == 1:
         print ('[INFO] Tag',nomeTag,'reconhecida')
-        print (pilha.pop())
+        #print (pilha.pop())
         return True
     else:
         print ('[ERROR] Tag',nomeTag,'nao reconhecida: expressao regular malformada!')

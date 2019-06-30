@@ -15,6 +15,7 @@ class Automato:
         self.eFinais = [] #Lista de estados finais
         self.eIniciais = [] #Lista de estados iniciais
 
+    #Verifica se o estado pode alcancar diretamente outros utilizando o char
     def processaChar (self, estado, char):
         transicoes = estado.getTransicoes(char)
         for t in transicoes:
@@ -22,42 +23,29 @@ class Automato:
                 return t.getDestino()
         return 0
 
-    def processaLambda(self, estado, char):
-        #Verifica todas as transicoes lambda do estado e escolhe uma
-        transicoes = estado.getTransicoes(char)
-        opcoes = []
+    #Verifica todos os possiveis estados que podem ser alcancados usando transicoes lambda
+    def processaLambda (self, estado, opcoes):
+        transicoes = estado.getTransicoes('+') #Trocar isso
+        opcoes.append(estado)
         if (len(transicoes) > 0):
             for t in transicoes:
                 if (t.getSimbolo() == ''):
-                    destino = t.getDestino()
-                    #Olhando as transicoes do destino
-                    if (self.processaChar(destino, char) != 0):
-                        #opcoes.append(destino)
-                        return destino
-                    else:
-                        #Processando as transicoes lambda do destino
-                        t_dest = destino.getTransicoes(char)
-                        for td in t_dest:
-                            if (self.processaChar(destino, char) != 0 or td.getSimbolo() == ''):
-                                #opcoes.append(destino)
-                                return self.processaLambda(destino,char)
-        #return opcoes
+                    self.processaLambda(t.getDestino(), opcoes)
 
     #Tenta, a partir de um estado, chegar em um estado final usando apenas transicoes lambda
     def processaFinal (self, estado, lista_visitado):
-        lista_visitado.append(estado)
         transicoes = estado.getTransicoes('+') #Trocar isso
         if (len(transicoes) > 0):
             for t in transicoes:
                 if (t.getSimbolo() == ''):
                     destino = t.getDestino()
+                    lista_visitado.append(destino)
                     #Processando as transicoes lambda do destino
                     t_dest = destino.getTransicoes('+')
                     for td in t_dest:
                         if (td.getSimbolo() == ''):
                             return self.processaFinal(destino, lista_visitado)
-                        else:
-                            return None
+
 
     def aceita(self, palavra):
         estadoAtual = self.eIniciais[0]
@@ -65,41 +53,43 @@ class Automato:
         while True: #Processa a palavra ate chegar ao fim
             if i == len(palavra):
                 break
-            print ('Processando estado', estadoAtual.getId(), 'com a letra', palavra[i])
-            #Ve se o estado tem uma transicao direta (usando a letra) para outro estado
+            #Ve se o estado tem uma transicao direta (usando o char) para outro estado
             t = self.processaChar(estadoAtual, palavra[i])
             if (t != 0):
                 i += 1
                 estadoAtual = t
             else:
                 #Se nao tem transicao direta, procura por transicoes lambda que tenham
-                #como destino estados que tenham transicoes diretas usando a letra
-                t = self.processaLambda(estadoAtual, palavra[i])
-                if (t is not None):
-                    estadoAtual = t
-                #if (len(t) != 0):
-                #    if(len(t) == 1):
-                #        estadoAtual = t[0]
-                #    else:
-                #        estadoAtual = t[randint(1, len(t))]
-                else:
-                    break
+                #como destino estados que tenham transicoes diretas usando o char
+                opcoes_estado = []
+                self.processaLambda(estadoAtual, opcoes_estado)
+                achou_estado = False
+                #Apos verificar todos os estados que podem ser atingidos usando transicoes lambda
+                #procura por qual deles aceita o caractere atual
+                for estado in opcoes_estado:
+                    transicoes = estado.getTransicoes(palavra[i])
+                    for t in transicoes:
+                        if (t.getSimbolo() == palavra[i]):
+                            achou_estado = True
+                            estadoAtual = t.getDestino()
+                #Se achou algum estado compativel, passa para a proxima letra e continua a iteracao
+                if (achou_estado):
+                    i += 1
+                else: #Se nao achou, significa que nao existe nenhuma transicao compativel com o char atual
+                    break #Sai do while para evitar loop infinito
         #Depois de todo o processamento, se parou em um estado final a palavra e aceita
         #Se parou em um estado que nao e final mas tem transicao lambda para um final, aceita tambem
-        print ('Estado final:', estadoAtual.getId())
-        if(estadoAtual.isFinal() and i == len(palavra)):
+        #Se nao processou a palavra toda, nao aceita
+        if (i < len(palavra)):
+            return False
+        if(estadoAtual.isFinal()):
             return True
         else:
             visitado = []
-            f = self.processaFinal(estadoAtual, visitado)
+            self.processaFinal(estadoAtual, visitado)
             for estado in visitado:
                 if (estado.isFinal()):
-                    print ('Chegou no final id', estado.getId())
                     return True
-            #transicoes = estadoAtual.getTransicoes(palavra[0]) #Nao importa o indice
-            #for t in transicoes:
-                #if (t.getSimbolo() == '' and t.getDestino().isFinal()):
-                    #return True
         return False
 
     #Retorna a tag (nome) do automato
