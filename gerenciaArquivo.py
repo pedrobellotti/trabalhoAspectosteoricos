@@ -47,3 +47,17 @@ def importaDivisao(nomeArquivo, texto):
     except(IOError):
        print ("[WARN] Erro ao abrir o arquivo:", nomeArquivo)
        return False
+
+#Salva em um arquivo todas as tags que foram divididas
+def salvaArquivoDivisao (nomeArquivo, tags):
+    if os.path.isfile(nomeArquivo):
+        print('[WARN] O arquivo', nomeArquivo, 'ja existe e as tags serao salvas no final do arquivo!')
+    try:
+        arquivo = open(nomeArquivo, "a") #a da append no arquivo
+        for tag in tags:
+            arquivo.write(tag + ' ')
+        arquivo.write('\n')
+        arquivo.close()
+        print ('[INFO] As tags divididas foram salvas')
+    except(IOError):
+        print ("[WARN] Erro ao salvar o arquivo:", nomeArquivo)

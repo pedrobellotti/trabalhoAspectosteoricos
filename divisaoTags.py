@@ -6,8 +6,10 @@
 # Pedro Bellotti - 201676043                            #
 #########################################################
 
+import gerenciaArquivo as arquivo
+
 #Processa todas as palavras em todos os automatos e salva quais aceitaram (comando :p)
-def divideTag (lista_palavra, lista_automatos):
+def divideTag (lista_palavra, lista_automatos, nomeArquivo):
     aceito = []
     quantidade_aceito = 0
     sobreposicao = []
@@ -23,10 +25,13 @@ def divideTag (lista_palavra, lista_automatos):
         quantidade_aceito = 0
         sobreposicao = []
     if (len(aceito) > 0):
-        print (*palavra,':',*aceito)
+        if(nomeArquivo == ''):
+            print (*aceito)
+        else:
+            arquivo.salvaArquivoDivisao(nomeArquivo,aceito)
     
 #Processa todas as palavras em todos os automatos e salva quais aceitaram (comando :f)
-def divideTagTexto (lista_palavra, lista_automatos):
+def divideTagTexto (lista_palavra, lista_automatos, nomeArquivo):
     aceito = []
     quantidade_aceito = 0
     sobreposicao = []
@@ -45,6 +50,9 @@ def divideTagTexto (lista_palavra, lista_automatos):
             quantidade_aceito = 0
             sobreposicao = []
         if (len(aceito) > 0):
-            print (*palavra,':',*aceito)
+            if(nomeArquivo == ''):
+                print (*aceito)
+            else:
+                arquivo.salvaArquivoDivisao(nomeArquivo,aceito)
         aceito = []
     
