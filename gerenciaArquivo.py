@@ -35,3 +35,15 @@ def salvaArquivo (nomeArquivo, tags):
         print ('[INFO] As definicoes de tags foram salvas')
     except(IOError):
         print ("[WARN] Erro ao salvar o arquivo:", nomeArquivo)
+
+#Importa o texto para ser dividido
+def importaDivisao(nomeArquivo, texto):
+    try:
+        with open(nomeArquivo) as arquivo:
+            for linha in arquivo:
+                texto.append(linha)
+        print ('[INFO] Os textos a serem divididos foram carregados')
+        return True
+    except(IOError):
+       print ("[WARN] Erro ao abrir o arquivo:", nomeArquivo)
+       return False

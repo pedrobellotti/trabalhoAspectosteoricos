@@ -1,0 +1,11 @@
+x = 10
+aabb
+ab
+aaaaaaaaa
+bbbbbb
+ababa
+1020
+333333
+==
+abba
+baab

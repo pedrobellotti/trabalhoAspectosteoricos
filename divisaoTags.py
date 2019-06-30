@@ -6,7 +6,7 @@
 # Pedro Bellotti - 201676043                            #
 #########################################################
 
-#Processa todas as palavras em todos os automatos e salva quais aceitaram
+#Processa todas as palavras em todos os automatos e salva quais aceitaram (comando :p)
 def divideTag (lista_palavra, lista_automatos):
     aceito = []
     quantidade_aceito = 0
@@ -22,5 +22,29 @@ def divideTag (lista_palavra, lista_automatos):
             print ('[WARN] Sobreposicao na definicao das tags', *sobreposicao)
         quantidade_aceito = 0
         sobreposicao = []
-    print (*aceito)
+    if (len(aceito) > 0):
+        print (*palavra,':',*aceito)
+    
+#Processa todas as palavras em todos os automatos e salva quais aceitaram (comando :f)
+def divideTagTexto (lista_palavra, lista_automatos):
+    aceito = []
+    quantidade_aceito = 0
+    sobreposicao = []
+    #Percorre todas as palavras da lista
+    for palavra in lista_palavra:
+        palavra = palavra.rstrip('\n') #rstrip remove o \n
+        palavra = palavra.split(' ')
+        for char in palavra:
+            for automato in lista_automatos:
+                if (automato.aceita(char)):
+                    quantidade_aceito += 1
+                    aceito.append(automato.getTag()[:-1])
+                    sobreposicao.append(automato.getTag()[:-1])
+            if (quantidade_aceito > 1):
+                print ('[WARN] Sobreposicao na definicao das tags', *sobreposicao)
+            quantidade_aceito = 0
+            sobreposicao = []
+        if (len(aceito) > 0):
+            print (*palavra,':',*aceito)
+        aceito = []
     

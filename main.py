@@ -14,6 +14,7 @@ import divisaoTags as divide
 if __name__ == "__main__":
     conjunto_tags = [] #Conjunto de tags validas (tags invalidas nao sao armazenadas)
     conjunto_automatos = [] #Conjunto de automatos criados a partir das tags
+    texto_divisao = [] #Conjunto de linhas lida do arquivo para ser dividida usando as tags
 
     #Le entradas do usuario ate que o comando :q seja digitado
     while True:
@@ -43,7 +44,13 @@ if __name__ == "__main__":
                             if (auto != 0):
                                 conjunto_automatos.append(auto)
             elif comando[0] == ':f':
-                print ('[INFO] Comando para realizar a divisao de tags do arquivo ainda nao implementado!')
+                if len(comando) != 2:
+                    print ('[WARN] Este comando precisa de 1 parametro!')
+                else:
+                    if (arquivo.importaDivisao(comando[1], texto_divisao)):
+                        #Faz a divisao em tags de todos as linhas do texto
+                        #for linha in texto_divisao:
+                        divide.divideTagTexto(texto_divisao, conjunto_automatos)
             elif comando[0] == ':o':
                 print ('[INFO] Comando para especificar o caminho do arquivo de saida ainda nao implementado!')
             elif comando[0] == ':p':
