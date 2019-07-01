@@ -6,8 +6,6 @@
 # Pedro Bellotti - 201676043                            #
 #########################################################
 
-from random import randint
-
 class Automato:
     def __init__(self, tag):
         self.tag = tag #Tag definida para o automato
@@ -46,7 +44,7 @@ class Automato:
                         if (td.getSimbolo() == ''):
                             return self.processaFinal(destino, lista_visitado)
 
-
+    #Determina se o automato aceita ou nao uma palavra
     def aceita(self, palavra):
         estadoAtual = self.eIniciais[0]
         i = 0 #Posicao da palavra
