@@ -21,7 +21,11 @@ def divideTag (lista_palavra, lista_automatos, nomeArquivo):
                 aceito.append(automato.getTag()[:-1])
                 sobreposicao.append(automato.getTag()[:-1])
         if (quantidade_aceito > 1):
+            #Se tiver mais de um aceito, guarda apenas o primeiro
             print ('[WARN] Sobreposicao na definicao das tags', *sobreposicao)
+            pri = aceito.pop(0)
+            aceito = []
+            aceito.append(pri)
         quantidade_aceito = 0
         sobreposicao = []
     if (len(aceito) > 0):
