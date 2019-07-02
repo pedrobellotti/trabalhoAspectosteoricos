@@ -6,6 +6,7 @@
 # Pedro Bellotti - 201676043                            #
 #########################################################
 
+import os
 import validacaoTags as valida
 import gerenciaArquivo as arquivo
 import fabricaAutomato as fabrica
@@ -56,6 +57,8 @@ if __name__ == "__main__":
                     print ('[WARN] Este comando precisa de 1 parametro!')
                 else:
                     caminho_salvar = comando[1]
+                    if os.path.isfile(caminho_salvar):
+                        print('[WARN] O arquivo', caminho_salvar, 'ja existe e as tags serao salvas no final do arquivo!')
             elif comando[0] == ':p':
                 if len(comando) < 2:
                     print ('[WARN] Este comando precisa de pelo menos 1 parametro!')

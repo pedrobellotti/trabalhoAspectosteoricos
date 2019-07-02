@@ -50,8 +50,6 @@ def importaDivisao(nomeArquivo, texto):
 
 #Salva em um arquivo todas as tags que foram divididas
 def salvaArquivoDivisao (nomeArquivo, tags):
-    if os.path.isfile(nomeArquivo):
-        print('[WARN] O arquivo', nomeArquivo, 'ja existe e as tags serao salvas no final do arquivo!')
     try:
         arquivo = open(nomeArquivo, "a") #a da append no arquivo
         for tag in tags:
