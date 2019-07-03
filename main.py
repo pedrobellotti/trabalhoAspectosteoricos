@@ -1,7 +1,7 @@
 #########################################################
 #   Trabalho DCC146 - Aspectos Teoricos da Computacao   #
 # Grupo:                                                #
-# Marcos Aquino                                         #
+# Marcos Aquino - 201276024                             #
 # Matheus Queiroz - 201776030                           #
 # Pedro Bellotti - 201676043                            #
 #########################################################
@@ -64,11 +64,6 @@ if __name__ == "__main__":
                     print ('[WARN] Este comando precisa de pelo menos 1 parametro!')
                 else:
                     divide.divideTag(comando[1:], conjunto_automatos, caminho_salvar)
-            ### Comando para imprimir todos os automatos da lista (apenas para testes, remover na versao final) ###
-            elif comando[0] == ':i':
-                for automato in conjunto_automatos:
-                    automato.imprimeAutomato()
-                    print ('-------------------')
             else:
                 print ('[ERROR] Comando invalido!')
         #Usuario digitou uma tag (do tipo VAR: ab+c+x+) diretamente e ela precisa ser validada

@@ -1,7 +1,7 @@
 #########################################################
 #   Trabalho DCC146 - Aspectos Teoricos da Computacao   #
 # Grupo:                                                #
-# Marcos Aquino                                         #
+# Marcos Aquino - 201276024                             #
 # Matheus Queiroz - 201776030                           #
 # Pedro Bellotti - 201676043                            #
 #########################################################
@@ -122,23 +122,9 @@ class Automato:
     def addEstadoFinal(self, e):
         self.eFinais.append(e)
     
-    #Atualiza a ID dos estados (apenas para conferir)
+    #Atualiza a ID dos estados
     def atualizaIds(self):
         id = 1
         for estado in self.estados:
             estado.setId(id)
             id += 1
-   
-    #Imprime automato (apenas para conferir)
-    def imprimeAutomato(self):
-        print('\n')
-        print ('TAG:', self.tag)
-        print ('Estados Iniciais:')
-        for estado in self.eIniciais:
-            print(estado.getId())
-        print ('Estados Finais:')
-        for estado in self.eFinais:
-            print(estado.getId())
-        print ('Todos os estados:')
-        for estado in self.estados:
-            estado.imprimeEstado()

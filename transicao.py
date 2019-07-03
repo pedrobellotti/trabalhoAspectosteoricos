@@ -1,7 +1,7 @@
 #########################################################
 #   Trabalho DCC146 - Aspectos Teoricos da Computacao   #
 # Grupo:                                                #
-# Marcos Aquino                                         #
+# Marcos Aquino - 201276024                             #
 # Matheus Queiroz - 201776030                           #
 # Pedro Bellotti - 201676043                            #
 #########################################################
@@ -30,8 +30,3 @@ class Transicao:
     #Muda o simbolo consumido pela transicao
     def setSimbolo (self, s):
         self.simbolo = s
-    #Imprime transicao (para conferir se esta tudo ok)
-    def imprimeTransicao(self):
-        print ('Origem: Estado', self.origem.getId())
-        print ('Destino: Estado', self.destino.getId())
-        print ('Simbolo consumido:', self.simbolo)

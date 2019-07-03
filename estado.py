@@ -1,7 +1,7 @@
 #########################################################
 #   Trabalho DCC146 - Aspectos Teoricos da Computacao   #
 # Grupo:                                                #
-# Marcos Aquino                                         #
+# Marcos Aquino - 201276024                             #
 # Matheus Queiroz - 201776030                           #
 # Pedro Bellotti - 201676043                            #
 #########################################################
@@ -40,16 +40,6 @@ class Estado:
     #Muda a ID do estado
     def setId(self, i):
         self.id = i
-    
-    #Imprime estado (apenas para conferir)
-    def imprimeEstado(self):
-        print('\n')
-        print('Estado',self.id)
-        print('Inicial',self.inicial)
-        print('Final',self.final)
-        print('Transicoes:')
-        for transicao in self.transicoes:
-            transicao.imprimeTransicao()
     
     #Retorna as transicoes do estado que aceitam um caractere (ou lambda)
     def getTransicoes(self, char):
